@@ -1,28 +1,105 @@
-/* Ionic theme tokens — night-sky palette.
-   This is the layer you'll re-skin over time: change these variables to
-   rebrand the whole app without touching component code. */
+/* Theme tokens — slate-night palette inspired by the Figma designs.
+   Della Respira for display headings, InspireTWDC for narrative/body. */
+@import url('https://fonts.googleapis.com/css2?family=Della+Respira&display=swap');
+
+/* InspireTWDC font family */
+@font-face {
+  font-family: 'InspireTWDC';
+  src: url('/fonts/InspireTWDC-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'InspireTWDC';
+  src: url('/fonts/InspireTWDC-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'InspireTWDC';
+  src: url('/fonts/InspireTWDC-Roman.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'InspireTWDC';
+  src: url('/fonts/InspireTWDC-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'InspireTWDC';
+  src: url('/fonts/InspireTWDC-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'InspireTWDC';
+  src: url('/fonts/InspireTWDC-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'InspireTWDC';
+  src: url('/fonts/InspireTWDC-Heavy.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'InspireTWDC';
+  src: url('/fonts/InspireTWDC-HeavyItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'InspireTWDC';
+  src: url('/fonts/InspireTWDC-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'InspireTWDC';
+  src: url('/fonts/InspireTWDC-BlackItalic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
-  --ion-background-color: #0b1020;
-  --ion-background-color-rgb: 11, 16, 32;
-  --ion-text-color: #e8edf7;
-  --ion-text-color-rgb: 232, 237, 247;
+  --ion-background-color: #262b44;
+  --ion-background-color-rgb: 38, 43, 68;
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255, 255, 255;
 
-  --ion-color-primary: #f2c14e;
-  --ion-color-primary-rgb: 242, 193, 78;
-  --ion-color-primary-contrast: #2a2004;
-  --ion-color-primary-contrast-rgb: 42, 32, 4;
-  --ion-color-primary-shade: #d5aa45;
-  --ion-color-primary-tint: #f4c760;
+  --ion-color-primary: #c29e90;
+  --ion-color-primary-rgb: 194, 158, 144;
+  --ion-color-primary-contrast: #1a1410;
+  --ion-color-primary-contrast-rgb: 26, 20, 16;
+  --ion-color-primary-shade: #a8897c;
+  --ion-color-primary-tint: #cdb0a3;
 
-  --ion-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --ion-font-family: 'InspireTWDC', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 
-  /* Art Deco / mid-century display face for headings, labels, and titles.
-     Narrative body text stays in the system font for readability. */
-  --wf-display: 'Poiret One', 'Century Gothic', 'Futura', var(--ion-font-family);
+  /* Display face for headings, labels, and titles. */
+  --wf-display: 'Della Respira', Georgia, serif;
+
+  /* Narrative italic */
+  --wf-narrative: 'InspireTWDC', Georgia, serif;
 
   /* App-specific */
-  --wf-gold: #f2c14e;
-  --wf-gold-soft: #ffe9a8;
-  --wf-ink: #0b1020;
+  --wf-gold: #c29e90;
+  --wf-gold-soft: #d4b5a8;
+  --wf-ink: #262b44;
   --wf-muted: #8a97b8;
+  --wf-bg: #262b44;
+  --wf-bg-deep: #1e2238;
 }

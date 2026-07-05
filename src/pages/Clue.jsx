@@ -14,6 +14,9 @@ import { useState } from 'react'
 import StoryText from '../components/StoryText'
 import Starfield from '../components/Starfield'
 import { EMBER_BY_ID, TOTAL_EMBERS, isCorrect, arrivalText } from '../data/hours'
+import { LAND_COLORS } from '../data/landColors'
+
+const basePath = import.meta.env.BASE_URL
 
 export default function Clue({ progress }) {
   const { id } = useParams()
@@ -23,7 +26,6 @@ export default function Clue({ progress }) {
 
   const [value, setValue] = useState('')
   const [wrong, setWrong] = useState(false)
-  // view: 'clue' → 'capture' → 'reveal'. Re-reading a caught ember jumps to 'reveal'.
   const [view, setView] = useState(alreadyDone ? 'reveal' : 'clue')
   const [hintOpen, setHintOpen] = useState(false)
   const [hintShown, setHintShown] = useState(false)
@@ -94,7 +96,7 @@ export default function Clue({ progress }) {
                 />
                 {wrong && (
                   <IonText color="warning">
-                    <p className="gate-wrong">That isn’t what this ember remembers. Look again.</p>
+                    <p className="gate-wrong">That isn't what this ember remembers. Look again.</p>
                   </IonText>
                 )}
                 <IonButton expand="block" className="cta" onClick={submit} disabled={!value.trim()}>
@@ -112,19 +114,28 @@ export default function Clue({ progress }) {
 
           {view === 'capture' && (
             <div className="capture">
-              <div className="capture-glyph">✦</div>
-              <p className="capture-title">Ember found</p>
-              <p className="capture-land">{ember.land}</p>
-              <p className="capture-quote">
-                “Something old just caught, for a moment, right where you were standing.”
-              </p>
-              <IonButton
-                fill="clear"
-                className="ghost-btn"
-                onClick={() => setView('reveal')}
+              <div
+                className="capture-glyph"
+                style={{
+                  '--ember-color': LAND_COLORS[ember.id],
+                  filter: `drop-shadow(0 0 20px ${LAND_COLORS[ember.id]}) drop-shadow(0 0 40px ${LAND_COLORS[ember.id]}50)`,
+                }}
               >
-                Tap to hear what it remembers →
-              </IonButton>
+                <img
+                  src={`${basePath}star-ember.svg`}
+                  alt="Ember recovered"
+                  style={{ filter: `brightness(1.2) drop-shadow(0 0 12px ${LAND_COLORS[ember.id]})` }}
+                />
+              </div>
+              <p className="capture-title" style={{ color: LAND_COLORS[ember.id] }}>Ember recovered</p>
+              <p className="capture-land" style={{ color: LAND_COLORS[ember.id] }}>{ember.land}</p>
+              <p className="capture-quote">
+                &ldquo;Something old just caught, for a moment, right where you were standing.&rdquo;
+              </p>
+              <button className="continue-btn" onClick={() => setView('reveal')}>
+                <span className="continue-label">CONTINUE</span>
+                <span className="continue-arrow">&rarr;</span>
+              </button>
             </div>
           )}
 
@@ -133,14 +144,16 @@ export default function Clue({ progress }) {
               <p className="reveal-title">{ember.title}</p>
               <p className="reveal-land">{ember.land}</p>
               <StoryText text={ember.ember} />
-              <IonButton expand="block" className="cta" onClick={() => history.replace('/home')}>
-                {progress.count >= TOTAL_EMBERS ? 'Return to the hub' : 'Keep following the light'}
-              </IonButton>
+              <button className="continue-btn" onClick={() => history.replace('/home')}>
+                <span className="continue-label">
+                  {progress.count >= TOTAL_EMBERS ? 'RETURN TO HUB' : 'KEEP FOLLOWING THE LIGHT'}
+                </span>
+                <span className="continue-arrow">&rarr;</span>
+              </button>
             </div>
           )}
         </div>
 
-        {/* Hint cost prompt */}
         {hintOpen && (
           <div className="ask-overlay" onClick={() => setHintOpen(false)}>
             <div className="ask-card" onClick={(e) => e.stopPropagation()}>

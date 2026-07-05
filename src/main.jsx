@@ -11,8 +11,7 @@ import '@ionic/react/css/typography.css'
 import '@ionic/react/css/padding.css'
 import '@ionic/react/css/text-alignment.css'
 
-/* Deco display face (bundled locally — no runtime font fetch) */
-import '@fontsource/poiret-one/400.css'
+/* Deco display face — Della Respira loaded via Google Fonts in variables.css */
 
 /* Theme + app styles */
 import './theme/variables.css'

@@ -27,13 +27,13 @@ export default function Flame({ lit = 4 }) {
       <defs>
         <radialGradient id="flame-core" cx="50%" cy="60%" r="60%">
           <stop offset="0%" stopColor="#fff6df" stopOpacity="0.95" />
-          <stop offset="55%" stopColor="#f2c14e" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="#f2c14e" stopOpacity="0" />
+          <stop offset="55%" stopColor="#c29e90" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="#c29e90" stopOpacity="0" />
         </radialGradient>
         <linearGradient id="tongue-fill" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0%" stopColor="#d5aa45" />
-          <stop offset="55%" stopColor="#f2c14e" />
-          <stop offset="100%" stopColor="#ffe9a8" />
+          <stop offset="0%" stopColor="#a8897c" />
+          <stop offset="55%" stopColor="#c29e90" />
+          <stop offset="100%" stopColor="#d4b5a8" />
         </linearGradient>
       </defs>
 
