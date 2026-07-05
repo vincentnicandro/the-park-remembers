@@ -16,7 +16,9 @@ export default function Hub() {
   const timerRef = useRef(null)
   const rafRef = useRef(null)
 
-  const start = () => {
+  const start = (e) => {
+    e.preventDefault()
+    e.currentTarget.setPointerCapture(e.pointerId)
     const t0 = performance.now()
     const tick = (now) => {
       const p = Math.min(1, (now - t0) / HOLD_MS)
@@ -30,7 +32,10 @@ export default function Hub() {
     rafRef.current = requestAnimationFrame(tick)
   }
 
-  const stop = () => {
+  const stop = (e) => {
+    if (e && e.currentTarget && e.pointerId !== undefined) {
+      try { e.currentTarget.releasePointerCapture(e.pointerId) } catch {}
+    }
     if (rafRef.current) cancelAnimationFrame(rafRef.current)
     if (timerRef.current) clearTimeout(timerRef.current)
     setHeld(0)
