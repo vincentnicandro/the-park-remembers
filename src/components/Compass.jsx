@@ -2,29 +2,43 @@
  * The Compass — a four-pointed star whose diamond tips represent the four
  * founding embers. Each point corresponds to a land at a cardinal direction.
  * As embers are recovered, their diamond lights up from dim to glowing.
- * Land names are displayed around the compass at their respective positions.
- * Tapping a diamond navigates to that land's clue.
+ * Unfound embers pulse sequentially around the compass.
+ * Land names curve along the outer ring, uppercase and letter-spaced.
+ * Tapping a diamond or label navigates to that land's clue.
  */
 import { LAND_COLORS } from '../data/landColors'
 
-// The four lands mapped to compass directions (clockwise from top)
+// The four lands in clockwise order from top (north).
+// The pulse animation delay staggers in this same order.
 const POINTS = [
-  { id: 'frontierland', label: 'Frontierland', angle: 0 },
-  { id: 'adventureland', label: 'Adventureland', angle: 90 },
-  { id: 'fantasyland', label: 'Fantasyland', angle: 180 },
-  { id: 'tomorrowland', label: 'Tomorrowland', angle: 270 },
+  { id: 'fantasyland', label: 'FANTASYLAND', angle: 0, pulseIndex: 0 },
+  { id: 'tomorrowland', label: 'TOMORROWLAND', angle: 90, pulseIndex: 1 },
+  { id: 'adventureland', label: 'ADVENTURELAND', angle: 180, pulseIndex: 2 },
+  { id: 'frontierland', label: 'FRONTIERLAND', angle: 270, pulseIndex: 3 },
 ].map((p) => ({
   ...p,
   color: LAND_COLORS[p.id],
-  dimColor: LAND_COLORS[p.id] + '40', // 25% opacity hex
+  dimColor: LAND_COLORS[p.id] + '70', // 44% opacity for a more visible dim
 }))
 
+const PULSE_DURATION = 8 // seconds for the full cycle (all 4 points)
+
+function arcPath(cx, cy, r, startDeg, endDeg) {
+  const toRad = (deg) => ((deg - 90) * Math.PI) / 180
+  const x1 = cx + r * Math.cos(toRad(startDeg))
+  const y1 = cy + r * Math.sin(toRad(startDeg))
+  const x2 = cx + r * Math.cos(toRad(endDeg))
+  const y2 = cy + r * Math.sin(toRad(endDeg))
+  const largeArc = endDeg - startDeg > 180 ? 1 : 0
+  return `M ${x1},${y1} A ${r},${r} 0 ${largeArc} 1 ${x2},${y2}`
+}
+
 export default function Compass({ collected = {}, onSelect }) {
-  const size = 240
+  const size = 300
   const center = size / 2
   const outerRadius = 90
   const innerRadius = 22
-  const labelRadius = 108
+  const textRadius = 120
 
   const buildDiamond = (angle) => {
     const rad = (a) => (a - 90) * (Math.PI / 180)
@@ -46,20 +60,12 @@ export default function Compass({ collected = {}, onSelect }) {
     return `M${tipX},${tipY} L${side1X},${side1Y} L${innerX},${innerY} L${side2X},${side2Y} Z`
   }
 
-  const getLabelPos = (angle) => {
-    const rad = (angle - 90) * (Math.PI / 180)
-    return {
-      x: center + labelRadius * Math.cos(rad),
-      y: center + labelRadius * Math.sin(rad),
-    }
-  }
-
   return (
     <div className="compass" aria-label="Compass showing ember recovery progress">
       <svg
         viewBox={`0 0 ${size} ${size}`}
         width="100%"
-        style={{ maxWidth: '260px', display: 'block', margin: '0 auto' }}
+        style={{ display: 'block', margin: '0 auto' }}
       >
         <defs>
           <radialGradient id="compass-glow" cx="50%" cy="50%" r="50%">
@@ -76,6 +82,15 @@ export default function Compass({ collected = {}, onSelect }) {
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
+          ))}
+          {/* Arc paths for curved text — each label spans ~70 degrees centered on its angle */}
+          {POINTS.map((point) => (
+            <path
+              key={`arc-${point.id}`}
+              id={`arc-${point.id}`}
+              d={arcPath(center, center, textRadius, point.angle - 35, point.angle + 35)}
+              fill="none"
+            />
           ))}
         </defs>
 
@@ -115,6 +130,8 @@ export default function Compass({ collected = {}, onSelect }) {
         {/* Diamond points — interactive */}
         {POINTS.map((point) => {
           const lit = !!collected[point.id]
+          // Stagger delay: each point pulses 0.75s after the previous
+          const delay = `${point.pulseIndex * (PULSE_DURATION / 4)}s`
           return (
             <path
               key={point.id}
@@ -122,7 +139,6 @@ export default function Compass({ collected = {}, onSelect }) {
               fill={lit ? point.color : point.dimColor}
               stroke={lit ? point.color : point.dimColor}
               strokeWidth="1"
-              opacity={lit ? 1 : 0.8}
               filter={lit ? `url(#glow-${point.id})` : undefined}
               className={`compass-point ${lit ? 'compass-point--lit' : 'compass-point--dim'}`}
               role="button"
@@ -135,7 +151,10 @@ export default function Compass({ collected = {}, onSelect }) {
                   onSelect && onSelect(point.id)
                 }
               }}
-              style={{ cursor: 'pointer', '--point-color': point.dimColor }}
+              style={{
+                cursor: 'pointer',
+                animationDelay: lit ? undefined : delay,
+              }}
             />
           )
         })}
@@ -143,21 +162,16 @@ export default function Compass({ collected = {}, onSelect }) {
         {/* Center dot */}
         <circle cx={center} cy={center} r="4" fill="#c29e90" opacity="0.6" />
 
-        {/* Land name labels — also tappable */}
+        {/* Curved land name labels along the outer arc */}
         {POINTS.map((point) => {
-          const pos = getLabelPos(point.angle)
           const lit = !!collected[point.id]
           return (
             <text
               key={point.id + '-label'}
-              x={pos.x}
-              y={pos.y}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fill={lit ? point.color : '#6b7394'}
-              fontSize="8"
+              fill={lit ? point.color : '#8a97b8'}
+              fontSize="9.5"
               fontFamily="'Della Respira', Georgia, serif"
-              letterSpacing="1"
+              letterSpacing="4"
               className="compass-label"
               role="button"
               tabIndex={0}
@@ -170,7 +184,13 @@ export default function Compass({ collected = {}, onSelect }) {
               }}
               style={{ cursor: 'pointer', transition: 'fill 0.6s ease' }}
             >
-              {point.label}
+              <textPath
+                href={`#arc-${point.id}`}
+                startOffset="50%"
+                textAnchor="middle"
+              >
+                {point.label}
+              </textPath>
             </text>
           )
         })}

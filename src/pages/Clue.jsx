@@ -16,8 +16,6 @@ import Starfield from '../components/Starfield'
 import { EMBER_BY_ID, TOTAL_EMBERS, isCorrect, arrivalText } from '../data/hours'
 import { LAND_COLORS } from '../data/landColors'
 
-const basePath = import.meta.env.BASE_URL
-
 export default function Clue({ progress }) {
   const { id } = useParams()
   const history = useHistory()
@@ -114,18 +112,18 @@ export default function Clue({ progress }) {
 
           {view === 'capture' && (
             <div className="capture">
-              <div
-                className="capture-glyph"
-                style={{
-                  '--ember-color': LAND_COLORS[ember.id],
-                  filter: `drop-shadow(0 0 20px ${LAND_COLORS[ember.id]}) drop-shadow(0 0 40px ${LAND_COLORS[ember.id]}50)`,
-                }}
-              >
-                <img
-                  src={`${basePath}star-ember.svg`}
-                  alt="Ember recovered"
-                  style={{ filter: `brightness(1.2) drop-shadow(0 0 12px ${LAND_COLORS[ember.id]})` }}
-                />
+              <div className="capture-glyph">
+                <svg
+                  viewBox="0 0 60 120"
+                  width="60"
+                  height="120"
+                  style={{ filter: `drop-shadow(0 0 20px ${LAND_COLORS[ember.id]}) drop-shadow(0 0 40px ${LAND_COLORS[ember.id]}80)` }}
+                >
+                  <path
+                    d="M30,0 L48,60 L30,120 L12,60 Z"
+                    fill={LAND_COLORS[ember.id]}
+                  />
+                </svg>
               </div>
               <p className="capture-title" style={{ color: LAND_COLORS[ember.id] }}>Ember recovered</p>
               <p className="capture-land" style={{ color: LAND_COLORS[ember.id] }}>{ember.land}</p>

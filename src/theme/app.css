@@ -90,7 +90,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 390px;
+  max-width: 420px;
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
@@ -231,11 +231,11 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 56px 20px calc(40px + env(safe-area-inset-bottom));
+  padding: 40px 16px calc(32px + env(safe-area-inset-bottom));
   animation: fadeUp 0.7s ease both;
 }
 .park-head {
-  margin-bottom: 28px;
+  margin-bottom: 12px;
   text-align: center;
 }
 .park-tag {
@@ -244,7 +244,7 @@
   letter-spacing: 0.01em;
   line-height: 1.35;
   color: var(--wf-gold);
-  margin: 10px 0 18px;
+  margin: 0;
 }
 .park-count {
   font-family: var(--wf-display);
@@ -252,6 +252,7 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--wf-gold);
+  margin-top: 8px;
 }
 .count-num {
   color: #ffffff;
@@ -261,27 +262,31 @@
 
 /* Compass component */
 .compass {
-  margin: 24px auto 20px;
-  max-width: 260px;
+  margin: 0 auto;
+  width: 85vw;
+  max-width: 340px;
 }
 .compass-point {
   transition: fill 0.6s ease, opacity 0.6s ease;
 }
 .compass-point--dim {
-  animation: compassPulse 3s ease-in-out infinite;
+  animation: compassPulse 8s ease-in-out infinite;
+  opacity: 0.2;
 }
 .compass-point--lit {
   animation: none;
 }
+/* Each point is visible for ~25% of the cycle. With staggered delays,
+   only one unfound ember is bright at any moment. */
 @keyframes compassPulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.9; }
+  0% { opacity: 0.15; }
+  8% { opacity: 1; }
+  17% { opacity: 1; }
+  25% { opacity: 0.15; }
+  100% { opacity: 0.15; }
 }
 .compass-point:hover {
   opacity: 0.95 !important;
-}
-.compass-point:active {
-  transform: scale(0.95);
 }
 .compass-label:hover {
   fill: #c29e90 !important;
