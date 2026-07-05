@@ -30,6 +30,8 @@ export const EMBERS = [
     id: 'frontierland',
     land: 'Frontierland',
     title: 'The Past',
+    dedication:
+      'Frontierland is dedicated to the faith, courage, and ingenuity of our hearty pioneers who blazed the trails and made this progress possible.',
     clue:
       "The past isn't behind you here. It's carved into a plaque so ordinary most people walk right past it — measurements, geology, a gift note from one anniversary decades gone. Somewhere inside all those careful, boring facts, if you count closely enough, something else is spelled out. Some memories don't announce themselves. They wait in a paragraph everyone else skims.",
     gate:
@@ -44,6 +46,8 @@ export const EMBERS = [
     id: 'tomorrowland',
     land: 'Tomorrowland',
     title: 'The Future',
+    dedication:
+      'A vista into a world of wondrous ideas, signifying man\'s achievement, a step into the future... and the hope for a peaceful and unified world.',
     clue:
       "Somewhere in this land, someone once looked at a wall that didn't exist yet and described exactly what should be built against it — lit the way they imagined it would look at night, decades before the wiring existed to prove them right. The future is never actually empty. It's already full of plans nobody's finished wiring yet, and every guest who walks through is standing, for a moment, inside someone else's unfinished idea of what comes next.",
     gate:
@@ -58,6 +62,8 @@ export const EMBERS = [
     id: 'adventureland',
     land: 'Adventureland',
     title: 'The Mystery',
+    dedication:
+      'Adventureland is dedicated to the wonder of adventure — the uncharted paths and distant lands that call to those who dare.',
     clue:
       "There are eyes in this land that were never meant to be found — and that's not a flaw in the design, that's the entire design. Some places are built to be understood. This one was built to be wondered about: a river that flows past the edge of the map, a flame left burning at a bend nobody explains. The carved gods along the path each keep a name; count into them the right way and they hand you a single word.",
     gate:
@@ -72,6 +78,8 @@ export const EMBERS = [
     id: 'fantasyland',
     land: 'Fantasyland',
     title: 'The Dream',
+    dedication:
+      'Fantasyland is dedicated to the young and the young in heart, to those who believe that when you wish upon a star, your dreams do come true.',
     clue:
       "Follow the light where the pachyderms fly,\nsixteen of them first wheeling low and then high.\n\nTrade each elephant's number for its shade,\nand lay those colors on the grid has made.\n\nRead every pair where the row meets the line,\nand the wish that they spell is your next sign.",
     gate: '',

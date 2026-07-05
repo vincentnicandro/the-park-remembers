@@ -359,6 +359,13 @@
 }
 
 /* ---- Clue ---- */
+.clue-land-title {
+  font-family: var(--wf-display);
+  font-size: 28px;
+  color: var(--wf-gold);
+  margin: 0 0 16px;
+  text-align: center;
+}
 .clue-back {
   display: flex;
   align-items: center;
@@ -604,6 +611,17 @@
 }
 .reveal-ember {
   margin-bottom: 12px;
+}
+.reveal-quote {
+  font-size: 16px;
+  font-style: italic;
+  font-family: var(--wf-narrative);
+  color: var(--wf-gold-soft);
+  margin: 0 auto 24px;
+  padding: 0;
+  border: none;
+  max-width: 300px;
+  text-align: center;
 }
 .reveal-land {
   font-family: var(--wf-display);
