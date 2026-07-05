@@ -1,33 +1,13 @@
-import { IonContent, IonPage, IonModal, IonButton } from '@ionic/react'
+import { IonContent, IonPage } from '@ionic/react'
 import { useHistory } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import StoryText from '../components/StoryText'
 import Starfield from '../components/Starfield'
 import Compass from '../components/Compass'
 import { TOTAL_EMBERS } from '../data/hours'
 
-const MIDPOINT = `You're carrying more than you came in with.
-
-Whatever led you here, it wasn't luck — you keep looking where most people don't. That's the whole of it. Keep going.`
-
-const MIDPOINT_AT = 2
-
 export default function Home({ progress }) {
   const history = useHistory()
-  const { collected, count, beatsSeen, markBeatSeen } = progress
+  const { collected, count } = progress
   const allDone = count >= TOTAL_EMBERS
-  const [showMidpoint, setShowMidpoint] = useState(false)
-
-  useEffect(() => {
-    if (count >= MIDPOINT_AT && !allDone && !beatsSeen.midpoint) {
-      setShowMidpoint(true)
-    }
-  }, [count, allDone, beatsSeen.midpoint])
-
-  const dismissMidpoint = () => {
-    setShowMidpoint(false)
-    markBeatSeen('midpoint')
-  }
 
   const handleSelect = (landId) => {
     if (allDone) {
@@ -61,15 +41,6 @@ export default function Home({ progress }) {
             </div>
           )}
         </div>
-
-        <IonModal isOpen={showMidpoint} onDidDismiss={dismissMidpoint} className="beat-modal">
-          <div className="beat-wrap night">
-            <StoryText text={MIDPOINT} />
-            <IonButton expand="block" className="cta" onClick={dismissMidpoint}>
-              Continue exploring
-            </IonButton>
-          </div>
-        </IonModal>
       </IonContent>
     </IonPage>
   )

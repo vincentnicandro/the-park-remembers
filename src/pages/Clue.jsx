@@ -1,10 +1,6 @@
 import {
   IonContent,
   IonPage,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
   IonButton,
   IonInput,
   IonText,
@@ -13,8 +9,15 @@ import { useParams, useHistory } from 'react-router-dom'
 import { useState } from 'react'
 import StoryText from '../components/StoryText'
 import Starfield from '../components/Starfield'
+import CipherGrid from '../components/CipherGrid'
 import { EMBER_BY_ID, TOTAL_EMBERS, isCorrect, arrivalText } from '../data/hours'
 import { LAND_COLORS } from '../data/landColors'
+
+const MIDPOINT_AT = 2
+
+const MIDPOINT_TEXT = `You're carrying more than you came in with.
+
+Whatever led you here, it wasn't luck — you keep looking where most people don't. That's the whole of it. Keep going.`
 
 export default function Clue({ progress }) {
   const { id } = useParams()
@@ -24,6 +27,7 @@ export default function Clue({ progress }) {
 
   const [value, setValue] = useState('')
   const [wrong, setWrong] = useState(false)
+  // views: 'clue' → 'capture' → 'reveal' → (optionally) 'midpoint' → home
   const [view, setView] = useState(alreadyDone ? 'reveal' : 'clue')
   const [hintOpen, setHintOpen] = useState(false)
   const [hintShown, setHintShown] = useState(false)
@@ -52,25 +56,37 @@ export default function Clue({ progress }) {
     progress.addCompromise(ember.id)
   }
 
+  const handleRevealContinue = () => {
+    // Show midpoint interstitial after the 2nd ember is recovered (and not previously seen)
+    if (progress.count === MIDPOINT_AT && !progress.beatsSeen.midpoint) {
+      setView('midpoint')
+    } else {
+      history.replace('/home')
+    }
+  }
+
+  const handleMidpointContinue = () => {
+    progress.markBeatSeen('midpoint')
+    history.replace('/home')
+  }
+
   return (
     <IonPage>
-      <IonHeader className="ion-no-border">
-        <IonToolbar className="clear-toolbar">
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/home" text="" />
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-
       <IonContent fullscreen className="night">
         <Starfield />
         <div className="clue-wrap">
+          <button className="clue-back" onClick={() => history.replace('/home')}>
+            <span className="clue-back-arrow">&larr;</span>
+            <span className="clue-back-label">BACK</span>
+          </button>
           {view === 'clue' && (
             <>
               <p className="arrival">{arrivalText(ember.land)}</p>
 
               <p className="clue-label">The clue</p>
-              <p className="clue-text">{ember.clue}</p>
+              <p className="clue-text" style={{ whiteSpace: 'pre-line' }}>{ember.clue}</p>
+
+              {ember.id === 'fantasyland' && <CipherGrid />}
 
               {hintShown && (
                 <p className="hint-text">
@@ -142,10 +158,20 @@ export default function Clue({ progress }) {
               <p className="reveal-title">{ember.title}</p>
               <p className="reveal-land">{ember.land}</p>
               <StoryText text={ember.ember} />
-              <button className="continue-btn" onClick={() => history.replace('/home')}>
+              <button className="continue-btn" onClick={handleRevealContinue}>
                 <span className="continue-label">
                   {progress.count >= TOTAL_EMBERS ? 'RETURN TO HUB' : 'KEEP FOLLOWING THE LIGHT'}
                 </span>
+                <span className="continue-arrow">&rarr;</span>
+              </button>
+            </div>
+          )}
+
+          {view === 'midpoint' && (
+            <div className="reveal page-turn">
+              <StoryText text={MIDPOINT_TEXT} />
+              <button className="continue-btn" onClick={handleMidpointContinue}>
+                <span className="continue-label">CONTINUE EXPLORING</span>
                 <span className="continue-arrow">&rarr;</span>
               </button>
             </div>

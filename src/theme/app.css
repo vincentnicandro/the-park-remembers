@@ -26,31 +26,25 @@
 }
 .star-layer--far {
   background-image:
-    radial-gradient(1px 1px at 40px 60px, rgba(255, 255, 255, 0.5), transparent),
-    radial-gradient(1px 1px at 120px 200px, rgba(200, 220, 255, 0.3), transparent),
-    radial-gradient(1px 1px at 200px 90px, rgba(255, 255, 255, 0.4), transparent),
-    radial-gradient(1px 1px at 260px 250px, rgba(255, 240, 200, 0.3), transparent),
-    radial-gradient(1px 1px at 90px 280px, rgba(255, 255, 255, 0.25), transparent);
-  background-size: 300px 300px;
+    radial-gradient(4px 4px at 40px 60px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(3px 3px at 200px 250px, rgba(255, 240, 200, 0.3), transparent);
+  background-size: 350px 350px;
   opacity: 0.4;
   animation: driftFar 140s linear infinite;
 }
 .star-layer--mid {
   background-image:
-    radial-gradient(1.5px 1.5px at 80px 120px, rgba(255, 255, 255, 0.6), transparent),
-    radial-gradient(1.5px 1.5px at 220px 60px, rgba(194, 158, 144, 0.5), transparent),
-    radial-gradient(1.5px 1.5px at 300px 260px, rgba(255, 255, 255, 0.5), transparent),
-    radial-gradient(1px 1px at 150px 320px, rgba(200, 220, 255, 0.4), transparent);
-  background-size: 400px 400px;
+    radial-gradient(6px 6px at 80px 120px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(5px 5px at 300px 260px, rgba(194, 158, 144, 0.4), transparent);
+  background-size: 450px 450px;
   opacity: 0.5;
   animation: driftMid 90s linear infinite, twinkle 6s ease-in-out infinite;
 }
 .star-layer--near {
   background-image:
-    radial-gradient(2px 2px at 60px 200px, rgba(212, 181, 168, 0.7), transparent),
-    radial-gradient(2px 2px at 380px 100px, rgba(255, 255, 255, 0.6), transparent),
-    radial-gradient(1.5px 1.5px at 500px 400px, rgba(194, 158, 144, 0.5), transparent);
-  background-size: 600px 600px;
+    radial-gradient(8px 8px at 60px 200px, rgba(212, 181, 168, 0.5), transparent),
+    radial-gradient(7px 7px at 400px 100px, rgba(255, 255, 255, 0.4), transparent);
+  background-size: 650px 650px;
   opacity: 0.6;
   animation: driftNear 60s linear infinite;
 }
@@ -365,6 +359,30 @@
 }
 
 /* ---- Clue ---- */
+.clue-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0;
+  margin-bottom: 12px;
+  align-self: flex-start;
+}
+.clue-back-arrow {
+  font-family: var(--wf-display);
+  font-size: 24px;
+  color: var(--wf-gold);
+  line-height: 1;
+}
+.clue-back-label {
+  font-family: var(--wf-display);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--wf-gold);
+}
 .clear-toolbar {
   --background: transparent;
   --border-color: transparent;
@@ -385,6 +403,7 @@
   line-height: 1.6;
   color: #ffffff;
   margin: 10px 0 32px;
+  text-align: left;
 }
 .gate {
   border-top: 1px solid rgba(194, 158, 144, 0.22);
@@ -430,8 +449,14 @@
   flex-direction: column;
   align-items: center;
   min-height: 100%;
-  justify-content: center;
   text-align: center;
+}
+.reveal {
+  justify-content: center;
+}
+.finale-wrap {
+  justify-content: flex-start;
+  padding-top: 40px;
 }
 .reveal-glyph,
 .strike-core {
@@ -470,6 +495,7 @@
   margin: 8px 0 28px;
   padding-left: 12px;
   border-left: 2px solid #5a4a42;
+  text-align: left;
 }
 .hint-text {
   font-size: 15px;
@@ -838,4 +864,191 @@
   .clue-wrap {
     animation: none !important;
   }
+}
+
+
+/* ---- Cipher Grid (Fantasyland) ---- */
+.cipher {
+  margin: 24px auto;
+  max-width: 300px;
+  position: relative;
+}
+.cipher-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+.cipher-grid > .cipher-cell-empty {
+  width: 36px;
+  height: 36px;
+}
+/* Header row (columns 5–8) */
+.cipher-grid > .cipher-col-header {
+  display: inline-flex;
+}
+/* Make the top row horizontal */
+.cipher-grid {
+  display: grid;
+  grid-template-columns: 36px repeat(4, 36px);
+  grid-template-rows: auto;
+  gap: 4px;
+  justify-content: center;
+}
+.cipher-row {
+  display: contents;
+}
+.cipher-row-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cipher-col-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cipher-cell-empty {
+  width: 36px;
+  height: 36px;
+}
+
+/* Number cells — circles that pulse */
+.cipher-num-cell {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--wf-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+}
+.cipher-num-cell--pulse {
+  animation: cipherPulse 2.5s ease-in-out infinite;
+}
+.cipher-num-cell--active {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  animation: none;
+}
+.cipher-num-cell:hover {
+  border-color: #fff;
+}
+@keyframes cipherPulse {
+  0%, 100% { border-color: var(--wf-gold); opacity: 0.6; }
+  50% { border-color: #d4b5a8; opacity: 1; }
+}
+.cipher-num-label {
+  font-family: var(--wf-display);
+  font-size: 14px;
+  color: var(--wf-gold);
+}
+.cipher-assigned-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Letter cells */
+.cipher-letter-cell {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--wf-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--wf-display);
+  font-size: 14px;
+  color: var(--wf-gold);
+  box-sizing: border-box;
+}
+
+/* Sudoku-style popup */
+.cipher-popup {
+  position: absolute;
+  transform: translateX(-50%);
+  background: #1e2238;
+  border: 1px solid #353a52;
+  border-radius: 14px;
+  padding: 12px;
+  z-index: 20;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.cipher-popup-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.cipher-popup-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.cipher-popup-btn:hover {
+  border-color: #fff;
+  transform: scale(1.15);
+}
+.cipher-popup-clear {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  background: none;
+  border: none;
+  color: var(--wf-muted);
+  font-size: 12px;
+  cursor: pointer;
+  text-align: center;
+  padding: 4px;
+}
+.cipher-popup-clear:hover {
+  color: #fff;
+}
+
+/* Encoded pairs — two rows of 5 */
+.cipher-pairs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.cipher-pairs-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.cipher-pair {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.cipher-pair-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: block;
+}
+
+.cipher-clear-all {
+  display: block;
+  margin: 16px auto 0;
+  background: none;
+  border: none;
+  color: var(--wf-muted);
+  font-family: var(--wf-display);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+.cipher-clear-all:hover {
+  color: #fff;
 }

@@ -73,7 +73,7 @@ export const EMBERS = [
     land: 'Fantasyland',
     title: 'The Dream',
     clue:
-      "This is the one land that was never trying to be real. It didn't have to be — it only had to be believed. Sixteen elephants turn through the same eight colors, over and over; somewhere you stood in that queue, a grid quietly turns those colors into letters. Read them pair by pair and a wish spells itself out.",
+      "Follow the light where the pachyderms fly,\nsixteen of them first wheeling low and then high.\n\nTrade each elephant's number for its shade,\nand lay those colors on the grid has made.\n\nRead every pair where the row meets the line,\nand the wish that they spell is your next sign.",
     gate:
       'Decode the color-pairs against the grid you found in the queue. What does the run of letters name?',
     accept: [
