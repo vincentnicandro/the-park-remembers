@@ -1,6 +1,6 @@
 import { IonContent, IonPage } from '@ionic/react'
 import { useHistory } from 'react-router-dom'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import StoryText from '../components/StoryText'
 import Starfield from '../components/Starfield'
 
@@ -9,37 +9,39 @@ const HUB = `You're standing where you started.
 It doesn't look the same, does it.`
 
 const HOLD_MS = 2500
+const TICK_MS = 30
 
 export default function Hub() {
   const history = useHistory()
-  const [held, setHeld] = useState(0) // 0..1 progress of the hold
-  const timerRef = useRef(null)
-  const rafRef = useRef(null)
+  const [held, setHeld] = useState(0)
+  const [pressing, setPressing] = useState(false)
+  const startTime = useRef(null)
+  const intervalRef = useRef(null)
 
-  const start = (e) => {
-    e.preventDefault()
-    e.currentTarget.setPointerCapture(e.pointerId)
-    const t0 = performance.now()
-    const tick = (now) => {
-      const p = Math.min(1, (now - t0) / HOLD_MS)
-      setHeld(p)
-      if (p >= 1) {
-        history.replace('/finale')
-        return
+  useEffect(() => {
+    if (pressing) {
+      startTime.current = Date.now()
+      intervalRef.current = setInterval(() => {
+        const elapsed = Date.now() - startTime.current
+        const p = Math.min(1, elapsed / HOLD_MS)
+        setHeld(p)
+        if (p >= 1) {
+          clearInterval(intervalRef.current)
+          intervalRef.current = null
+          history.replace('/finale')
+        }
+      }, TICK_MS)
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+        intervalRef.current = null
       }
-      rafRef.current = requestAnimationFrame(tick)
+      setHeld(0)
     }
-    rafRef.current = requestAnimationFrame(tick)
-  }
-
-  const stop = (e) => {
-    if (e && e.currentTarget && e.pointerId !== undefined) {
-      try { e.currentTarget.releasePointerCapture(e.pointerId) } catch {}
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current)
     }
-    if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    if (timerRef.current) clearTimeout(timerRef.current)
-    setHeld(0)
-  }
+  }, [pressing, history])
 
   return (
     <IonPage>
@@ -50,10 +52,12 @@ export default function Hub() {
 
           <div
             className="hold"
-            onPointerDown={start}
-            onPointerUp={stop}
-            onPointerLeave={stop}
-            onPointerCancel={stop}
+            onTouchStart={() => setPressing(true)}
+            onTouchEnd={() => setPressing(false)}
+            onTouchCancel={() => setPressing(false)}
+            onMouseDown={() => setPressing(true)}
+            onMouseUp={() => setPressing(false)}
+            onMouseLeave={() => setPressing(false)}
           >
             <svg viewBox="0 0 120 120" className="hold-ring">
               <circle cx="60" cy="60" r="52" className="hold-track" />

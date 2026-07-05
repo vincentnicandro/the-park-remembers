@@ -74,8 +74,7 @@ export const EMBERS = [
     title: 'The Dream',
     clue:
       "Follow the light where the pachyderms fly,\nsixteen of them first wheeling low and then high.\n\nTrade each elephant's number for its shade,\nand lay those colors on the grid has made.\n\nRead every pair where the row meets the line,\nand the wish that they spell is your next sign.",
-    gate:
-      'Decode the color-pairs against the grid you found in the queue. What does the run of letters name?',
+    gate: '',
     accept: [
       'smallworld',
       'small world',

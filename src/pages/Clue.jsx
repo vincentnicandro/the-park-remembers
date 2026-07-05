@@ -96,8 +96,7 @@ export default function Clue({ progress }) {
               )}
 
               <div className="gate">
-                <p className="gate-label">When you are standing where it fell:</p>
-                <p className="gate-q">{ember.gate}</p>
+                {ember.gate && <p className="gate-q">{ember.gate}</p>}
                 <IonInput
                   className="gate-input"
                   placeholder="Your answer"
@@ -114,7 +113,7 @@ export default function Clue({ progress }) {
                   </IonText>
                 )}
                 <IonButton expand="block" className="cta" onClick={submit} disabled={!value.trim()}>
-                  Catch the ember
+                  Submit
                 </IonButton>
 
                 {!hintShown && (
@@ -155,13 +154,24 @@ export default function Clue({ progress }) {
 
           {view === 'reveal' && (
             <div className="reveal page-turn">
+              <div className="reveal-ember">
+                <svg
+                  viewBox="0 0 60 120"
+                  width="30"
+                  height="60"
+                  style={{ filter: `drop-shadow(0 0 12px ${LAND_COLORS[ember.id]}) drop-shadow(0 0 24px ${LAND_COLORS[ember.id]}60)` }}
+                >
+                  <path
+                    d="M30,0 L48,60 L30,120 L12,60 Z"
+                    fill={LAND_COLORS[ember.id]}
+                  />
+                </svg>
+              </div>
               <p className="reveal-title">{ember.title}</p>
               <p className="reveal-land">{ember.land}</p>
               <StoryText text={ember.ember} />
               <button className="continue-btn" onClick={handleRevealContinue}>
-                <span className="continue-label">
-                  {progress.count >= TOTAL_EMBERS ? 'RETURN TO HUB' : 'KEEP FOLLOWING THE LIGHT'}
-                </span>
+                <span className="continue-label">CONTINUE</span>
                 <span className="continue-arrow">&rarr;</span>
               </button>
             </div>

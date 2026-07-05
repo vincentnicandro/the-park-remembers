@@ -112,13 +112,13 @@
   transform: translateY(8px);
   transition: opacity 1.1s ease, transform 1.1s ease;
   line-height: 1.65;
-  font-size: 16px;
+  font-size: 18px;
   font-style: italic;
   font-family: var(--wf-narrative);
   color: #ffffff;
   margin: 0 auto 18px;
   text-align: center;
-  max-width: 300px;
+  max-width: 360px;
 }
 .story-line.in {
   opacity: 1;
@@ -397,13 +397,16 @@
   padding: 12px 20px calc(40px + env(safe-area-inset-bottom));
   animation: fadeUp 0.7s ease both;
   text-align: center;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .clue-text {
-  font-size: 19px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.65;
   color: #ffffff;
   margin: 10px 0 32px;
-  text-align: left;
+  text-align: center;
 }
 .gate {
   border-top: 1px solid rgba(194, 158, 144, 0.22);
@@ -422,7 +425,8 @@
   font-size: 13px;
 }
 .gate-q {
-  font-size: 17px;
+  font-size: 18px;
+  line-height: 1.65;
   color: #ffffff;
   margin: 6px 0 16px;
 }
@@ -453,6 +457,7 @@
 }
 .reveal {
   justify-content: center;
+  flex: 1;
 }
 .finale-wrap {
   justify-content: flex-start;
@@ -546,7 +551,7 @@
 }
 
 .capture {
-  min-height: 70vh;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -564,7 +569,7 @@
   text-transform: uppercase;
   font-size: 12px;
   color: var(--wf-gold);
-  margin: 18px 0 6px;
+  margin: 18px 0 0;
 }
 .capture-land {
   font-family: var(--wf-display);
@@ -572,14 +577,16 @@
   letter-spacing: 0.03em;
   color: var(--wf-gold);
   font-weight: 400;
+  margin: 2px 0 0;
 }
 .capture-quote {
-  font-size: 16px;
+  font-size: 18px;
+  line-height: 1.65;
   font-style: italic;
   font-family: var(--wf-narrative);
   color: #ffffff;
   margin: 16px auto 8px;
-  max-width: 280px;
+  max-width: 360px;
   text-align: center;
 }
 @keyframes fadeUp {
@@ -593,13 +600,16 @@
   text-transform: uppercase;
   font-size: 12px;
   color: var(--wf-gold);
-  margin: 0 0 2px;
+  margin: 0;
+}
+.reveal-ember {
+  margin-bottom: 12px;
 }
 .reveal-land {
   font-family: var(--wf-display);
   font-size: 28px;
   color: var(--wf-gold);
-  margin: 0 0 24px;
+  margin: 2px 0 24px;
 }
 .page-turn {
   animation: pageTurn 0.7s ease both;
